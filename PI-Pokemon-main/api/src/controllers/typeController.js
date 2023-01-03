@@ -1,10 +1,13 @@
 const axios = require('axios');
 const { Type } = require("../db");
+const { typeUrl } = require("./utils");
 
 const getAllTypes = async() => {
-    let allTypes = (await axios('https://pokeapi.co/api/v2/type')).data.results;
+    // get types from API
+    let allTypes = (await axios(typeUrl)).data.results;
     allTypes = allTypes.map(e => e.name);
     
+    // save types in DB
     allTypes.forEach( type => {
         Type.findOrCreate({
             where: { name: type }

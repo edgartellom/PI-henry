@@ -1,0 +1,13 @@
+.homeBg {
+    background-image: url("../../pictures/273289.jpg");
+    background-position: left ;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+@media (max-width: 560px) {
+    .homeBg {
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}

@@ -1,35 +1,13 @@
 const axios = require('axios');
 const { Pokemon, Type } = require("../db");
+const { pokemonUrl, initialPokemon, pokemonAmount, parsePokeInfo } = require("./utils");
 
 const getApiInfo = async () => {
-    const apiUrl = (await axios('https://pokeapi.co/api/v2/pokemon?offset=0&limit=40')).data.results;
-    const apiInfo = [];
+    //initial getting
+    const apiUrl = (await axios(`${pokemonUrl}?offset=${initialPokemon}&limit=${pokemonAmount}`)).data.results;
+    //parse necessary info
+    const apiInfo = await parsePokeInfo(apiUrl);
 
-    for (let pokemonInfo of apiUrl) {
-        let { id, name, stats, height, weight, sprites, types } = (await axios(pokemonInfo.url)).data;
-
-        types = types.map(e => e.type.name);
-        const hp = stats.find(e => e.stat.name === "hp").base_stat;
-        const attack  = stats.find(e => e.stat.name === "attack").base_stat;
-        const defense  = stats.find(e => e.stat.name === "defense").base_stat;
-        const speed  = stats.find(e => e.stat.name === "speed").base_stat;
-
-        apiInfo.push({
-            id,
-            name,
-            hp,
-            attack,
-            defense,
-            speed, 
-            height, 
-            weight,
-            "image": {
-                "default": sprites.front_default,
-                "animated": sprites.versions["generation-v"]["black-white"].animated.front_default,
-            },
-            types,
-        });
-    }
     return apiInfo;
 }
 
