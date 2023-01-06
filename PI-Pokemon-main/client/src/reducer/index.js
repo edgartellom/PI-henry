@@ -1,21 +1,42 @@
 import { 
     GET_POKEMONS, 
     GET_POKEMON_BY_NAME, 
-    GET_POKEMON_DETAIL, 
+    GET_POKEMON_DETAIL,
+    GET_TYPES,
+    POST_POKEMON, 
     FILTER_BY_TYPE, 
     FILTER_CREATED, 
-    SORT_BY_NAME, 
-    SORT_BY_ATACK,
+    SORT_BY_PROP, 
+    SORTING_ORDER,
     
 } from "../action-types";
 
 const initialState = {
     pokemons: [],
     allPokemons: [],
+    prop: '',
+    order: '',
     types: []
 }
 
 function rootReducer(state=initialState, action){
+    const sortPokemons = (pokemons, prop, order) => {
+        if (order === 'asc'){
+            return (pokemons.sort((a,b) => {
+                if (a[prop] > b[prop]) return 1;
+                if (a[prop] < b[prop]) return -1;
+                return 0;
+            }))
+        }
+        if (order === 'desc'){
+            return (pokemons.sort((a,b) => {
+                if (a[prop] > b[prop]) return -1;
+                if (a[prop] < b[prop]) return 1;
+                return 0;
+            }))
+        }
+    }
+    
     switch (action.type) {
         case GET_POKEMONS:
             return {
@@ -23,6 +44,23 @@ function rootReducer(state=initialState, action){
                 pokemons: action.payload,
                 allPokemons: action.payload
             }
+
+        case GET_POKEMON_BY_NAME:
+            return {
+                ...state,
+                pokemons: action.payload
+            }
+        case GET_TYPES:
+            return{
+                ...state,
+                types: action.payload
+            }
+        
+        case POST_POKEMON:
+            return {
+                ...state,
+            }
+        
         case FILTER_BY_TYPE:
             const allPokemons = state.allPokemons;
             const filterByType = (types) => {
@@ -37,7 +75,8 @@ function rootReducer(state=initialState, action){
             return {
                 ...state,
                 pokemons: statusFiltered
-            }    
+            } 
+        
         case FILTER_CREATED:
             const allPokemons2 = state.allPokemons;
             const createdFilter = () => {
@@ -53,43 +92,25 @@ function rootReducer(state=initialState, action){
                 ...state,
                 pokemons: createdFilter() 
             }
-        case SORT_BY_NAME:
-            let sortedName = action.payload === 'asc' ?
-                state.pokemons.sort((a,b) => {
-                    if (a.name > b.name) return 1;
-                    if (a.name < b.name) return -1;
-                    return 0;
-                }) :
-                state.pokemons.sort((a,b) => {
-                    if (a.name > b.name) return -1;
-                    if (a.name < b.name) return 1;
-                    return 0;
-                })
+
+        case SORT_BY_PROP: 
+            state.prop = action.payload
+            console.log(sortPokemons(state.pokemons, state.prop&&state.prop, state.order&&state.order))
             return {
                 ...state,
-                pokemons: sortedName
+                prop: action.payload,
             }
-            case SORT_BY_ATACK:
-            let sortedAttack = action.payload === 'ascAtt' ?
-                state.pokemons.sort((a,b) => {
-                    if (a.attack > b.attack) return 1;
-                    if (a.attack < b.attack) return -1;
-                    return 0;
-                }) :
-                state.pokemons.sort((a,b) => {
-                    if (a.attack > b.attack) return -1;
-                    if (a.attack < b.attack) return 1;
-                    return 0;
-                })
+
+        case SORTING_ORDER:  
+            state.order = action.payload    
+            console.log(sortPokemons(state.pokemons, state.prop&&state.prop, state.order&&state.order))
             return {
                 ...state,
-                pokemons: sortedAttack
+                order: action.payload,
             }
-            case GET_POKEMON_BY_NAME:
-                return {
-                    ...state,
-                    pokemons: action.payload
-                }
+        
+        
+        
         default: 
             return state
     }

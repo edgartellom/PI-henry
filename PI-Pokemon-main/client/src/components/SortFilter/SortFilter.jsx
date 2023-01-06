@@ -1,9 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { filterByType, filterCreated, sortByName, sortByAttack } from "../../actions"
+import { useDispatch, useSelector } from "react-redux";
+// import { useState } from "react";
+import { filterByType, filterCreated, sortByProp, sortingOrder } from "../../actions"
 
-function SortFilter({setCurrentPage, setOrderName, setOrderAttack}){
+function SortFilter({setCurrentPage, setPropOrder, setOrder}){
     const dispatch = useDispatch();
+    const propOrder = useSelector((state) => state.prop)
     
     function handleFilterByType(e){
         dispatch(filterByType(e.target.value));
@@ -13,40 +15,43 @@ function SortFilter({setCurrentPage, setOrderName, setOrderAttack}){
         dispatch(filterCreated(e.target.value));
     }
 
-    function handleSortByName(e){
+    function handleSortByProp(e){
         e.preventDefault();
-        dispatch(sortByName(e.target.value));
+        dispatch(sortByProp(e.target.value));
         setCurrentPage(1);
-        setOrderName(`Sorted ${e.target.value}`)
-    }
+        setPropOrder(`Sorted by ${e.target.value}`)
+    } 
 
-    function handleSortByAttack(e){
+    function handleSortOrder(e){
         e.preventDefault();
-        dispatch(sortByAttack(e.target.value));
+        dispatch(sortingOrder(e.target.value));
         setCurrentPage(1);
-        setOrderAttack(`Sorted ${e.target.value}`)
+        setOrder(`Sorted ${e.target.value}`)
     }
     
     return (
             <div>
                 <div>
-                    <label>Sort By Name:
-                        <select onChange={e => handleSortByName(e)}>
-                            <option value="" disabled selected>Select order</option>
-                            <option value='asc'>Ascendant</option>
-                            <option value='desc'>Descendant</option>
+                    <label>Sort: </label>
+                        <select onChange={e => handleSortByProp(e)}>
+                            <option value="" disabled selected>Select a prop</option>
+                            <option value='name'>Name</option>
+                            <option value='attack'>Attack</option>
                         </select>
-                    </label>
-                    <label>Sort By Attack:
-                        <select onChange={e => handleSortByAttack(e)}>
-                            <option value="" disabled selected>Select order</option>
-                            <option value='ascAtt'>Ascendant</option>
-                            <option value='descAtt'>Descendant</option>
-                        </select>
-                    </label>
+                    
+                    {
+                        propOrder&&
+                            <select onChange={e => handleSortOrder(e)}>
+                                <option value="" disabled selected>Select order</option>
+                                <option value='asc'>Ascendant</option>
+                                <option value='desc'>Descendant</option>
+                            </select>
+                            
+                        
+                    }
                 </div>
                 <div>
-                    <label>Filter by Type:
+                    <label>Filter by Type: </label>
                         <select onChange={e => handleFilterByType(e)}>
                             <option value="" disabled selected>Select type</option>
                             <option value ='All'>All</option>
@@ -71,15 +76,15 @@ function SortFilter({setCurrentPage, setOrderName, setOrderAttack}){
                             <option value ='unknown'>Unknown</option>
                             <option value='shadow'>Shadow</option>
                         </select>
-                    </label>
-                    <label> Filter Created:
+                    
+                    <label>Filter Created: </label>
                         <select onChange={e => handleFilterCreated(e)}>
                             <option value="" disabled selected>Select source</option>
                             <option value ='All'>All</option>
                             <option value='created'>Created</option>
                             <option value ='api'>Existing</option>
                         </select>
-                    </label>
+                    
                 </div>
             </div>
     )

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 //import hooks from react-redux (previously install it --> npm i react-redux)
 import { useDispatch, useSelector } from "react-redux";
 //import actions gonna use in this component
-import { getPokemons, filterByType, filterCreated, sortByName, sortByAttack } from "../../actions";
+import { getPokemons} from "../../actions";
 //import components gonna use
 import Cards from "../Cards/Cards";
 import Paginated from "../Paginated/Paginated"
@@ -20,8 +20,8 @@ function Home() {
     const allPokemons = useSelector(state => state.pokemons);
     const [currentPage, setCurrentPage] = useState(1);
     const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
-    const [orderName, setOrderName] = useState('');
-    const [orderAttack, setOrderAttack] = useState('');
+    const [propOrder, setPropOrder] = useState('');
+    const [order, setOrder] = useState('');
     const indexOfLastPokemon = currentPage * pokemonsPerPage; //12
     const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage; //0
     const currentPokemons = allPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
@@ -50,8 +50,8 @@ function Home() {
             </button>
             <SortFilter
                 setCurrentPage={setCurrentPage}
-                setOrderName={setOrderName}
-                setOrderAttack={setOrderAttack}
+                setPropOrder={setPropOrder}
+                setOrder={setOrder}
             />
             <Paginated 
                 pokemonsPerPage={pokemonsPerPage}

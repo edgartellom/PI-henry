@@ -1,0 +1,23 @@
+.createBg {
+    background-image: url("../../pictures/homeBackground.jpg");
+    background-position: center ;
+    background-size: cover;
+    height: 700px;
+}
+
+@media (max-width: 560px) {
+    .createBg {
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}
+
+.typesInput{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.typeCheck{
+    padding: 5px;
+}
+
