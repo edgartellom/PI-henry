@@ -8,16 +8,17 @@ function Cards ({pokemons}){
             {
                 pokemons?.map( p => (
         
-                    <Link to={'/home/' + p.id} style={{textDecoration: 'none'}}>
+                    <Link key={p.id} to={`/home/${p.id}`} style={{textDecoration: 'none'}}>
                         <Card 
-                            key={p.id} 
                             name={p.name} 
-                            image={p.image.default} 
-                            types={p.types}  
+                            image={p.image ? p.image.home : p.img} 
+                            types={p.types}
+                            id={p.id} 
                         />
                     </Link>
         
                 ))
+
             }
         </div>
     )

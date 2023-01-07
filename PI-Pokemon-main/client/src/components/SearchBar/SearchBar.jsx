@@ -21,7 +21,7 @@ function SearchBar({setCurrentPage}) {
         <div>
             <input
                 type='text'
-                placeholder='Search...'
+                placeholder='Search pokemon...'
                 onChange={e => handleInputChange(e)}
             />
             <button type='submit'onClick={e => handleSubmit(e)}>Search</button>

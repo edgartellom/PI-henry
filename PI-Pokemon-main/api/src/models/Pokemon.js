@@ -28,18 +28,13 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
     },
     height: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
     },
     weight: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
     },
-    image: {
-      type: DataTypes.JSON,
-      allowNull: false,
-      defaultValue: {
-        "default":'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/back/25.png',
-        "animated": 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/back/25.gif'
-      }
+    img: {
+      type: DataTypes.STRING,
     },
     createdInDb: {
       type: DataTypes.BOOLEAN,

@@ -19,8 +19,11 @@ function Home() {
     const dispatch = useDispatch();
     const allPokemons = useSelector(state => state.pokemons);
     const [currentPage, setCurrentPage] = useState(1);
+    // eslint-disable-next-line no-unused-vars
     const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
+    // eslint-disable-next-line no-unused-vars
     const [propOrder, setPropOrder] = useState('');
+    // eslint-disable-next-line no-unused-vars
     const [order, setOrder] = useState('');
     const indexOfLastPokemon = currentPage * pokemonsPerPage; //12
     const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage; //0
@@ -39,15 +42,16 @@ function Home() {
         dispatch(getPokemons());
     }
 
-    
-
     return(
         <div className={homeBg}>
-            <Link to='/pokemon'>Create pokemon</Link>
+            <Link to='/pokemon'><button>Create pokemon</button></Link>
             <h1>Gotta Catch 'Em All!</h1>
             <button onClick={e => handleClick(e)}>
-                Load all pokemons again
+                Reload all pokemons
             </button>
+            <SearchBar 
+                setCurrentPage={setCurrentPage}
+            />
             <SortFilter
                 setCurrentPage={setCurrentPage}
                 setPropOrder={setPropOrder}
@@ -57,9 +61,6 @@ function Home() {
                 pokemonsPerPage={pokemonsPerPage}
                 allPokemons={allPokemons.length}
                 paginated={paginated}
-            />
-            <SearchBar 
-                setCurrentPage={setCurrentPage}
             />
             <Cards pokemons={currentPokemons} />
         </div>

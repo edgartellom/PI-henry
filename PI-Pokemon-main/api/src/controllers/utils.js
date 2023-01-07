@@ -27,8 +27,8 @@ const parsePokeInfo = async (apiUrl) => {
             height, 
             weight,
             "image": {
-                "default": sprites.other["official-artwork"].front_default,
-                "animated": sprites.versions["generation-v"]["black-white"].animated.front_default,
+                "home": sprites.other["official-artwork"].front_default,
+                "detail": sprites.versions["generation-v"]["black-white"].animated.front_default,
             },
             types,
         });

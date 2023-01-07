@@ -1,26 +1,25 @@
 import React from "react";
 import { pokeCard, pokeInfo, pokeType, pokeImage } from "./Card.module.css"
 
-function Card ({ name, image, types}){
+function Card ({ name, image, types, id}){
     return (
         <div className={pokeCard}>
             <div className={pokeInfo}>
                 <h3>{name}</h3>
                 <div className={pokeType}>
                     <span>Type:</span>
-                        {
-                            types.map( e => {
-                                return(
-                                    <>
-                                    <span> {e.name} </span>
-                                    </>
-                                )})
-                        }
+                    {types.map( (t,i) => (<span key={i}> {t.name} </span>))}
                 </div>
 
             </div>
             
-            <img src={image} alt='img not found' width='200px' height='250px' className={pokeImage}/>
+            <img 
+                src={image ? image : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/back/25.png'} 
+                alt='img not found' 
+                width='200px' 
+                height='250px' 
+                className={pokeImage}
+            />
         </div>
     )
 }

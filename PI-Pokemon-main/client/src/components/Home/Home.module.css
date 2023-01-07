@@ -1,8 +1,9 @@
 .homeBg {
-    background-image: url("../../pictures/273289.jpg");
+    background-image: url("../../pictures/homeBackground.jpg");
     background-position: left ;
     background-attachment: fixed;
     background-size: cover;
+    height: 2100px;
 }
 
 @media (max-width: 560px) {

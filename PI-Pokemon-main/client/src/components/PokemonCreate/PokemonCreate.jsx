@@ -2,18 +2,24 @@ import React, { useState, useEffect }from "react";
 import { Link, useHistory} from 'react-router-dom';
 import { postPokemon, getTypes } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
-import { createBg, typesInput, typeCheck } from './PokemonCreate.module.css';
+import { createBg, error } from './PokemonCreate.module.css';
 
 function validate(input) {
     let errors = {};
     let stats = ["hp", "attack", "defense", "speed", "height", "weight"]
     if (!input.name){
         errors.name = "Name is required"
+    } else if (!/^[a-zA-Z]+$/g.test(input.name)){
+        errors.name = "Name can't contain numbers or special characters"
     }
+    if (input.name)
     stats.forEach(stat => {
         if (isNaN(Number(input[stat]))){
             errors[stat] = `${stat} must be a number`
-        } 
+        }
+        if (input[stat] > 1000) {
+            errors[stat] = `${stat} must be less than 1000 points`
+        }
     })
         
     return errors;
@@ -33,7 +39,8 @@ function PokemonCreate() {
         defense: "", 
         speed: "", 
         height: "", 
-        weight: "", 
+        weight: "",
+        img: "",
         type: [] 
     })
 
@@ -47,22 +54,19 @@ function PokemonCreate() {
             [e.target.name] : e.target.value
         }))
         
-        console.log(input)
+        
     }
 
-    const handleCheck = (e) => {
-        if (e.target.checked){
+    const handleSelect = (e) => {
             setInput({
                 ...input,
                 type: [...input.type, e.target.value]
             })
-        }
-        console.log(input)
+        
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(input);
         dispatch(postPokemon(input))
         alert("Pokemon created succesfully!!!")
         setInput({
@@ -72,10 +76,19 @@ function PokemonCreate() {
             defense: "",
             speed: "", 
             height: "", 
-            weight: "", 
+            weight: "",
+            img: "",
             type: [] 
         })
         history.push('/home')
+    }
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+        setInput({
+            ...input,
+            type: input.type.filter(t => t !== e.target.value)
+        })
     }
 
     useEffect(() => {
@@ -84,7 +97,6 @@ function PokemonCreate() {
 
     return (
         <div className={createBg}>
-            <Link to='/home'><button>Return</button></Link>
             <h1>Create your pokemon!</h1>
             <form onSubmit={e => handleSubmit(e)}>
                 <div>
@@ -96,7 +108,7 @@ function PokemonCreate() {
                         onChange={e => handleChange(e)}
                     />
                     {errors.name && (
-                        <p>{errors.name}</p>
+                        <p className={error}>{errors.name}</p>
                     )}
                 </div>
                 <div>
@@ -108,7 +120,7 @@ function PokemonCreate() {
                         onChange={e => handleChange(e)}
                     />
                     {errors.hp && (
-                        <p>{errors.hp}</p>
+                        <p className={error}>{errors.hp}</p>
                     )}
                 </div>
                 <div>
@@ -120,7 +132,7 @@ function PokemonCreate() {
                         onChange={e => handleChange(e)}
                     />
                     {errors.attack && (
-                        <p>{errors.attack}</p>
+                        <p className={error}>{errors.attack}</p>
                     )}
                 </div>
                 <div>
@@ -132,7 +144,7 @@ function PokemonCreate() {
                         onChange={e => handleChange(e)}
                     />
                     {errors.defense && (
-                        <p>{errors.defense}</p>
+                        <p className={error}>{errors.defense}</p>
                     )}
                 </div>
                 <div>
@@ -144,7 +156,7 @@ function PokemonCreate() {
                         onChange={e => handleChange(e)}
                     />
                     {errors.speed && (
-                        <p>{errors.speed}</p>
+                        <p className={error}>{errors.speed}</p>
                     )}
                 </div>
                 <div>
@@ -156,7 +168,7 @@ function PokemonCreate() {
                         onChange={e => handleChange(e)}
                     />
                     {errors.height && (
-                        <p>{errors.height}</p>
+                        <p className={error}>{errors.height}</p>
                     )}
                 </div>
                 <div>
@@ -168,25 +180,34 @@ function PokemonCreate() {
                         onChange={e => handleChange(e)}
                     />
                     {errors.weight && (
-                        <p>{errors.weight}</p>
+                        <p className={error}>{errors.weight}</p>
                     )}
                 </div>
-                <div className={typesInput}>
-                    <label>Type: </label> 
-                        {types.map((t) => (
-                            <label className={typeCheck}>
-                                <input
-                                type="checkbox"
-                                name={t.name}
-                                value={t.name}
-                                onChange={e => handleCheck(e)}
-                                />
-                                {t.name} 
-                            </label>
-                        ))}
-                        
+                <div>
+                    <label>Image URL: </label>
+                    <input
+                        type='text'
+                        value={input.img}
+                        name='img'
+                        onChange={e => handleChange(e)}
+                    />
+                    {errors.img && (
+                        <p className={error}>{errors.img}</p>
+                    )}
                 </div>
 
+                <div>
+                    <label>Type: </label>
+                    <select defaultValue={"default"} onChange={e => handleSelect(e)}>
+                        <option value="default" disabled>Select a type</option>
+                        {types.map((t,i) => (
+                            <option key={i} value={t.name}>{t.name}</option>
+                        ))
+
+                        }
+                    </select>
+                </div>
+                {input.type.map((t,i) => (<div key={i}>{t} <button name="delete" value={t} onClick={e => handleDelete(e)}>X</button></div>))}
                 <div>
                     <input 
                         type="submit"
@@ -195,8 +216,8 @@ function PokemonCreate() {
                         disabled={Object.keys(errors).length !== 0 || !input.name}
                     />
                 </div>
-                
             </form>
+            <Link to='/home'><button>Return</button></Link>
         </div>
     )
 }

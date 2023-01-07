@@ -14,6 +14,7 @@ function Paginado ({pokemonsPerPage, allPokemons, paginated}) {
                 { 
                     pageNumbers?.map(number => (
                         <li className={pageNumber} key={number}>
+                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                             <a onClick={() => paginated(number)}>{number}</a>
                         </li>
                     

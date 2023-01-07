@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useState } from "react";
 import { filterByType, filterCreated, sortByProp, sortingOrder } from "../../actions"
 
 function SortFilter({setCurrentPage, setPropOrder, setOrder}){
@@ -33,16 +32,16 @@ function SortFilter({setCurrentPage, setPropOrder, setOrder}){
             <div>
                 <div>
                     <label>Sort: </label>
-                        <select onChange={e => handleSortByProp(e)}>
-                            <option value="" disabled selected>Select a prop</option>
+                        <select defaultValue={'default'} onChange={e => handleSortByProp(e)}>
+                            <option value="default" disabled>Select a prop</option>
                             <option value='name'>Name</option>
                             <option value='attack'>Attack</option>
                         </select>
                     
                     {
                         propOrder&&
-                            <select onChange={e => handleSortOrder(e)}>
-                                <option value="" disabled selected>Select order</option>
+                            <select defaultValue={'default'} onChange={e => handleSortOrder(e)}>
+                                <option value="default" disabled>Select order</option>
                                 <option value='asc'>Ascendant</option>
                                 <option value='desc'>Descendant</option>
                             </select>
@@ -52,8 +51,8 @@ function SortFilter({setCurrentPage, setPropOrder, setOrder}){
                 </div>
                 <div>
                     <label>Filter by Type: </label>
-                        <select onChange={e => handleFilterByType(e)}>
-                            <option value="" disabled selected>Select type</option>
+                        <select defaultValue={'default'} onChange={e => handleFilterByType(e)}>
+                            <option value="default" disabled>Select type</option>
                             <option value ='All'>All</option>
                             <option value ='normal'>Normal</option>
                             <option value='fighting'>Fighting</option>
@@ -78,8 +77,8 @@ function SortFilter({setCurrentPage, setPropOrder, setOrder}){
                         </select>
                     
                     <label>Filter Created: </label>
-                        <select onChange={e => handleFilterCreated(e)}>
-                            <option value="" disabled selected>Select source</option>
+                        <select defaultValue={'default'} onChange={e => handleFilterCreated(e)}>
+                            <option value="default" disabled>Select source</option>
                             <option value ='All'>All</option>
                             <option value='created'>Created</option>
                             <option value ='api'>Existing</option>

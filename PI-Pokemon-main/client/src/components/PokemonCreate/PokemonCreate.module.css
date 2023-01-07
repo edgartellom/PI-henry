@@ -1,8 +1,9 @@
 .createBg {
-    background-image: url("../../pictures/homeBackground.jpg");
+    background-image: url("../../pictures/createBackground.jpg");
     background-position: center ;
     background-size: cover;
     height: 700px;
+    margin-top: -21px;
 }
 
 @media (max-width: 560px) {
@@ -12,12 +13,6 @@
     }
 }
 
-.typesInput{
-    width: 50%;
-    margin: 0 auto;
+.error{
+    color: red;
 }
-
-.typeCheck{
-    padding: 5px;
-}
-

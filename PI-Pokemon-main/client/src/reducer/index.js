@@ -14,28 +14,30 @@ import {
 const initialState = {
     pokemons: [],
     allPokemons: [],
+    detail: [],
+    types: [],
     prop: '',
-    order: '',
-    types: []
+    order: ''
+}
+
+const sortPokemons = (pokemons, prop, order) => {
+    if (order === 'asc'){
+        return (pokemons.sort((a,b) => {
+            if (a[prop] > b[prop]) return 1;
+            if (a[prop] < b[prop]) return -1;
+            return 0;
+        }))
+    }
+    if (order === 'desc'){
+        return (pokemons.sort((a,b) => {
+            if (a[prop] > b[prop]) return -1;
+            if (a[prop] < b[prop]) return 1;
+            return 0;
+        }))
+    }
 }
 
 function rootReducer(state=initialState, action){
-    const sortPokemons = (pokemons, prop, order) => {
-        if (order === 'asc'){
-            return (pokemons.sort((a,b) => {
-                if (a[prop] > b[prop]) return 1;
-                if (a[prop] < b[prop]) return -1;
-                return 0;
-            }))
-        }
-        if (order === 'desc'){
-            return (pokemons.sort((a,b) => {
-                if (a[prop] > b[prop]) return -1;
-                if (a[prop] < b[prop]) return 1;
-                return 0;
-            }))
-        }
-    }
     
     switch (action.type) {
         case GET_POKEMONS:
@@ -49,6 +51,11 @@ function rootReducer(state=initialState, action){
             return {
                 ...state,
                 pokemons: action.payload
+            }
+        case GET_POKEMON_DETAIL:
+            return {
+                ...state,
+                detail: action.payload
             }
         case GET_TYPES:
             return{
@@ -95,7 +102,7 @@ function rootReducer(state=initialState, action){
 
         case SORT_BY_PROP: 
             state.prop = action.payload
-            console.log(sortPokemons(state.pokemons, state.prop&&state.prop, state.order&&state.order))
+            sortPokemons(state.pokemons, state.prop&&state.prop, state.order&&state.order)
             return {
                 ...state,
                 prop: action.payload,
@@ -103,7 +110,7 @@ function rootReducer(state=initialState, action){
 
         case SORTING_ORDER:  
             state.order = action.payload    
-            console.log(sortPokemons(state.pokemons, state.prop&&state.prop, state.order&&state.order))
+            sortPokemons(state.pokemons, state.prop&&state.prop, state.order&&state.order)
             return {
                 ...state,
                 order: action.payload,

@@ -40,6 +40,20 @@ export function getPokemonByName(name) {
     }
 }
 
+export function getPokemonDetail(id) {
+    return async (dispatch) => {
+        try {
+            var json = await axios(`http://localhost:3001/pokemons/${id}`)
+            return dispatch({
+                type: GET_POKEMON_DETAIL,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export function getTypes() {
     return async (dispatch) => {
         try {

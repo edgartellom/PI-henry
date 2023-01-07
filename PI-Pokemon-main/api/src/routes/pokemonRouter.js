@@ -48,7 +48,7 @@ router.post("/", async  (req, res, next) => {
             speed, 
             height, 
             weight,
-            createdInDb, 
+            img, 
             type 
         } = req.body;
         
@@ -60,7 +60,7 @@ router.post("/", async  (req, res, next) => {
             speed, 
             height, 
             weight,
-            createdInDb,
+            img
         })
 
         let typeDb = await Type.findAll({
