@@ -74,4 +74,23 @@ router.post("/", async  (req, res, next) => {
     }
 });
 
+router.delete("/:id", async  (req, res, next) => {
+    try {
+        const { id } = req.params;
+        let pokemonsTotal = await getAllPokemons();
+        if (id){
+            let pokemonId = await pokemonsTotal.filter(e => e.id == id);
+            await Pokemon.destroy({
+                where: {id: id}
+            })
+            pokemonId.length?
+            res.status(200).send(pokemonId) :
+            res.status(404).send('Pokemon not found!');
+        }
+        pokemonsTotal = pokemonsTotal.filter(e => e.id != id)
+    } catch (error) {
+        next(error)
+    }
+});
+
 module.exports = router;

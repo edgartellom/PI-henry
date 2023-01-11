@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemonDetail } from "../../actions";
+import { cleanDetail, cleanFilter, cleanSort, deletePokemon, getPokemonDetail, getPokemons } from "../../actions";
 import { useEffect } from "react";
 import { pokeDetail, capitalize, detailBg } from './Detail.module.css'
 
@@ -9,11 +9,27 @@ function Detail() {
     const dispatch = useDispatch();
     const { id } = useParams();
 
+    const myPokemon = useSelector(state => state.detail)
+
     useEffect(() => {
         dispatch(getPokemonDetail(id));
     },[dispatch, id])
 
-    const myPokemon = useSelector(state => state.detail)
+    function handleGoHome(e) {
+        dispatch(cleanDetail());
+        dispatch(cleanSort());
+        dispatch(cleanFilter());
+    }
+
+    function handleDelete(e) {
+        alert(`Pokemon Nº ${id} deleted!!!`)
+        dispatch(deletePokemon(id));
+        dispatch(cleanDetail());
+        dispatch(cleanSort());
+        dispatch(cleanFilter());
+        
+        
+    }
 
     return (
         <div className={detailBg}>
@@ -38,10 +54,11 @@ function Detail() {
                         <p>Defense: {myPokemon[0].defense}</p>
                         <p>Speed: {myPokemon[0].speed}</p>
                     </div>
+                    <span>{myPokemon[0].createdInDb && <Link to='/home' onClick={handleDelete}><button>Delete</button></Link>}</span>
+                    <span><Link to='/home' onClick={handleGoHome}><button >Go Home</button></Link></span>
                 </div> : 
                 <p className={pokeDetail}>Loading...</p>
             }
-            <Link to='/home'><button>Return</button></Link>
         </div>
     )
         

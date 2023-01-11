@@ -4,10 +4,17 @@ import {
     GET_POKEMON_DETAIL,
     GET_TYPES,
     POST_POKEMON, 
+    DELETE_POKEMON,
     FILTER_BY_TYPE, 
     FILTER_CREATED, 
-    SORT_BY_PROP, 
-    SORTING_ORDER,
+    SET_FILTER,
+    SET_SORT,
+    SET_ORDER,
+    CLEAN_FILTER,
+    CLEAN_SORT,
+    CLEAN_DETAIL,
+    CLEAN_ORDER,
+    CLEAN_SELECTED_FILTER,
     
 } from "../action-types";
 
@@ -16,8 +23,10 @@ const initialState = {
     allPokemons: [],
     detail: [],
     types: [],
-    prop: '',
-    order: ''
+    sort: '',
+    order: '',
+    filter: '',
+    selectedFilter: ''
 }
 
 const sortPokemons = (pokemons, prop, order) => {
@@ -68,6 +77,11 @@ function rootReducer(state=initialState, action){
                 ...state,
             }
         
+        case DELETE_POKEMON:
+            return {
+                ...state,
+            }    
+            
         case FILTER_BY_TYPE:
             const allPokemons = state.allPokemons;
             const filterByType = (types) => {
@@ -81,7 +95,8 @@ function rootReducer(state=initialState, action){
             const statusFiltered = action.payload === 'All' ? allPokemons : pokemonsFiltered
             return {
                 ...state,
-                pokemons: statusFiltered
+                pokemons: statusFiltered,
+                selectedFilter: action.payload
             } 
         
         case FILTER_CREATED:
@@ -97,26 +112,59 @@ function rootReducer(state=initialState, action){
             }
             return {
                 ...state,
-                pokemons: createdFilter() 
+                pokemons: createdFilter(),
+                selectedFilter: action.payload
             }
 
-        case SORT_BY_PROP: 
-            state.prop = action.payload
-            sortPokemons(state.pokemons, state.prop&&state.prop, state.order&&state.order)
+        case SET_FILTER:
             return {
                 ...state,
-                prop: action.payload,
+                filter: action.payload,
             }
 
-        case SORTING_ORDER:  
+        case SET_SORT: 
+            return {
+                ...state,
+                sort: action.payload,
+            }
+
+        case SET_ORDER:  
             state.order = action.payload    
-            sortPokemons(state.pokemons, state.prop&&state.prop, state.order&&state.order)
+            sortPokemons(state.pokemons, state.sort, state.order)
             return {
                 ...state,
                 order: action.payload,
             }
         
+        case CLEAN_FILTER:
+            return {
+                ...state,
+                filter: ''
+            }
         
+        case CLEAN_SELECTED_FILTER:
+            return { 
+                ...state,
+                selectedFilter: ''
+            }
+        
+        case CLEAN_SORT:
+            return {
+                ...state,
+                sort: ''
+            }
+        
+        case CLEAN_ORDER:
+            return { 
+                ...state,
+                order: ''
+            }
+        
+        case CLEAN_DETAIL:
+            return {
+                ...state,
+                detail: []
+            }
         
         default: 
             return state

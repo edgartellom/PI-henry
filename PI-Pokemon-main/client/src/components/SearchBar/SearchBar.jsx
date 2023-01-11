@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getPokemonByName } from '../../actions';
+import { cleanFilter, cleanSort, getPokemonByName } from '../../actions';
 
 function SearchBar({setCurrentPage}) {
     const dispatch = useDispatch();
@@ -15,7 +15,10 @@ function SearchBar({setCurrentPage}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(getPokemonByName(name));
-        setCurrentPage(1)
+        setCurrentPage(1);
+        dispatch(cleanSort());
+        dispatch(cleanFilter());
+        
     }
     return (
         <div>

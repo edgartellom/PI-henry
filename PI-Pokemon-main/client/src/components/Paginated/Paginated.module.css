@@ -12,3 +12,7 @@
     background-color: white;
     color: #D7C8B6;
 }
+
+.currentNumber{
+    text-decoration: underline;
+}

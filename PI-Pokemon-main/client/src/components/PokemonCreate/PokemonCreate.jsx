@@ -1,6 +1,6 @@
 import React, { useState, useEffect }from "react";
 import { Link, useHistory} from 'react-router-dom';
-import { postPokemon, getTypes } from '../../actions';
+import { postPokemon, getTypes, cleanSort, cleanFilter, getPokemons } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
 import { createBg, error } from './PokemonCreate.module.css';
 
@@ -44,6 +44,8 @@ function PokemonCreate() {
         type: [] 
     })
 
+    const [selected, setSelected] = useState('');
+
     const handleChange = (e) => {
         setInput({
             ...input,
@@ -62,12 +64,15 @@ function PokemonCreate() {
                 ...input,
                 type: [...input.type, e.target.value]
             })
+            setSelected("")
         
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(postPokemon(input))
+        dispatch(cleanSort());
+        dispatch(cleanFilter());
         alert("Pokemon created succesfully!!!")
         setInput({
             name: "", 
@@ -89,6 +94,11 @@ function PokemonCreate() {
             ...input,
             type: input.type.filter(t => t !== e.target.value)
         })
+    }
+
+    const handleGoHome = (e) => {
+        dispatch(cleanSort());
+        dispatch(cleanFilter());
     }
 
     useEffect(() => {
@@ -198,8 +208,8 @@ function PokemonCreate() {
 
                 <div>
                     <label>Type: </label>
-                    <select defaultValue={"default"} onChange={e => handleSelect(e)}>
-                        <option value="default" disabled>Select a type</option>
+                    <select value={selected} onChange={e => handleSelect(e)}>
+                        <option value="" disabled>Select a type</option>
                         {types.map((t,i) => (
                             <option key={i} value={t.name}>{t.name}</option>
                         ))
@@ -207,7 +217,7 @@ function PokemonCreate() {
                         }
                     </select>
                 </div>
-                {input.type.map((t,i) => (<div key={i}>{t} <button name="delete" value={t} onClick={e => handleDelete(e)}>X</button></div>))}
+                {input.type.map((t,i) => (<div key={i}>{t} <button name="delete" value={t} onClick={e => handleDelete(e)}>x</button></div>))}
                 <div>
                     <input 
                         type="submit"
@@ -217,7 +227,7 @@ function PokemonCreate() {
                     />
                 </div>
             </form>
-            <Link to='/home'><button>Return</button></Link>
+            <Link to='/home' onClick={handleGoHome}><button>Go Home</button></Link>
         </div>
     )
 }

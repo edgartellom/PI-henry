@@ -6,9 +6,20 @@
     height: 2100px;
 }
 
+@media (max-width: 866px) {
+    .homeBg {
+        height: 2900px;
+    }
+}
+
+@media (max-width: 596px) {
+    .homeBg {
+        height: 5300px;
+    }
+}
+
 @media (max-width: 560px) {
     .homeBg {
-        background-size: contain;
-        background-repeat: no-repeat;
+        height: 7300px;
     }
 }
