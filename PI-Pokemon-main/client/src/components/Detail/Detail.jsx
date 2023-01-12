@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { cleanDetail, cleanFilter, cleanSort, deletePokemon, getPokemonDetail, getPokemons } from "../../actions";
+import { cleanDetail, cleanFilter, cleanSort, deletePokemon, getPokemonDetail } from "../../redux/actions";
 import { useEffect } from "react";
 import { pokeDetail, capitalize, detailBg } from './Detail.module.css'
 

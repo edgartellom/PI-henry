@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { cleanOrder, cleanSelectedFilter, filterByType, filterCreated, setFilter, setSort, setSortOrder } from "../../actions"
+import { cleanOrder, cleanSelectedFilter, filterByType, filterCreated, setFilter, setSort, setSortOrder } from "../../redux/actions"
 
 function SortFilter({setCurrentPage, order, sort, filter, selectedFilter}){
     const dispatch = useDispatch();

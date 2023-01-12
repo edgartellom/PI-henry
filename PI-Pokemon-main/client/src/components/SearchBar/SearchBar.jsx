@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { cleanFilter, cleanSort, getPokemonByName } from '../../actions';
+import { cleanFilter, cleanSort, getPokemonByName } from '../../redux/actions';
 
 function SearchBar({setCurrentPage}) {
     const dispatch = useDispatch();

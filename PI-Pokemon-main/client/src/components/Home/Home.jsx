@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 //import hooks from react-redux (previously install it --> npm i react-redux)
 import { useDispatch, useSelector } from "react-redux";
 //import actions gonna use in this component
-import { cleanFilter, cleanSort, getPokemons} from "../../actions";
+import { cleanFilter, cleanSort, getPokemons} from "../../redux/actions";
 //import components gonna use
 import Cards from "../Cards/Cards";
 import Paginated from "../Paginated/Paginated"
