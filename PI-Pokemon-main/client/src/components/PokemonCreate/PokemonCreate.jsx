@@ -1,6 +1,6 @@
 import React, { useState, useEffect }from "react";
 import { Link, useHistory} from 'react-router-dom';
-import { postPokemon, getTypes, cleanSort, cleanFilter, getPokemons } from '../../actions';
+import { postPokemon, getTypes, cleanSort, cleanFilter } from '../../redux/actions';
 import { useDispatch, useSelector } from "react-redux";
 import { createBg, error } from './PokemonCreate.module.css';
 
