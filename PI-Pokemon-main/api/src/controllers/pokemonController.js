@@ -1,10 +1,12 @@
 const axios = require('axios');
 const { Pokemon, Type } = require("../db");
-const { pokemonUrl, initialPokemon, pokemonAmount, parsePokeInfo } = require("./utils");
+const { initialPokemon, pokemonAmount, parsePokeInfo } = require("./utils");
+require('dotenv').config();
+const pokemonUrl = process.env.API_URL
 
 const getApiInfo = async () => {
     //initial getting
-    const apiUrl = (await axios(`${pokemonUrl}?offset=${initialPokemon}&limit=${pokemonAmount}`)).data.results;
+    const apiUrl = (await axios(`${pokemonUrl}/pokemon?offset=${initialPokemon}&limit=${pokemonAmount}`)).data.results;
     //parse necessary info
     const apiInfo = await parsePokeInfo(apiUrl);
 

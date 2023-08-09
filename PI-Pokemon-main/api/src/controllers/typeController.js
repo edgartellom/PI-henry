@@ -1,10 +1,11 @@
 const axios = require('axios');
 const { Type } = require("../db");
-const { typeUrl } = require("./utils");
+require('dotenv').config();
+const typeUrl = process.env.API_URL
 
 const getAllTypes = async() => {
     // get types from API
-    let allTypes = (await axios(typeUrl)).data.results;
+    let allTypes = (await axios(`${typeUrl}/type`)).data.results;
     allTypes = allTypes.map(e => e.name);
     
     // save types in DB

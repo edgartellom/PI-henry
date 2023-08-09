@@ -1,9 +1,6 @@
 const axios = require('axios');
-
-const pokemonUrl = 'https://pokeapi.co/api/v2/pokemon';
 const initialPokemon = 0;
 const pokemonAmount = 40;
-const typeUrl = 'https://pokeapi.co/api/v2/type';
 
 const parsePokeInfo = async (apiUrl) => {
     const apiInfo = [];
@@ -37,9 +34,7 @@ const parsePokeInfo = async (apiUrl) => {
 }
 
 module.exports = {
-    pokemonUrl,
     initialPokemon,
     pokemonAmount,
-    typeUrl,
     parsePokeInfo
 }
